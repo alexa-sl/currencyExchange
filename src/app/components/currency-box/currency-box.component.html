@@ -1,20 +1,42 @@
 <form [formGroup]="form">
   <div class="group">
-    <select>
-      <option>RUB</option>
-      <option>EUR</option>
-      <option>USD</option>
+    <select formControlName="inputCur">
+      <option *ngFor="let currency of currencies" [ngValue]="currency">
+        {{currency.code}} {{currency.name}}
+      </option>
     </select>
-    <input formControlName="inputVal" type="number" name="inputVal" id="inputVal">
+    <input
+      formControlName="inputVal"
+      type="number"
+      name="inputVal"
+      id="inputVal"
+      (change)="count(
+        this.form.value['inputVal'],
+        2,
+        'outputVal',
+        this.form.value['inputCur']
+      )"
+    >
   </div>
 
   <div class="group">
-    <select>
-      <option>RUB</option>
-      <option>EUR</option>
-      <option>USD</option>
+    <select formControlName="outputCur">
+      <option *ngFor="let currency of currencies" [ngValue]="currency">
+        {{currency.code}} {{currency.name}}
+      </option>
     </select>
-    <input formControlName="outputVal" type="number" name="outputVal" id="outputVal">
+    <input
+      formControlName="outputVal"
+      type="number"
+      name="outputVal"
+      id="outputVal"
+      (change)="count(
+        this.form.value['outputVal'],
+        3,
+        'inputVal',
+        this.form.value['outputCur']
+      )"
+    >
   </div>
 
 </form>
