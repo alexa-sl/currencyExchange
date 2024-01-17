@@ -1,6 +1,13 @@
 <form [formGroup]="form">
   <div class="group">
-    <select formControlName="inputCur">
+    <select
+      formControlName="inputCur"
+      (change)="
+        getRatesForCurrency(this.form.value['inputCur'], 'outputVal');
+        count(this.form.value['inputVal'],
+        'outputVal',
+        this.form.value['outputCur'])
+      ">
       <option *ngFor="let currency of currencies" [ngValue]="currency">
         {{currency.code}} {{currency.name}}
       </option>
@@ -8,19 +15,23 @@
     <input
       formControlName="inputVal"
       type="number"
-      name="inputVal"
-      id="inputVal"
       (change)="count(
         this.form.value['inputVal'],
-        2,
         'outputVal',
-        this.form.value['inputCur']
+        this.form.value['outputCur']
       )"
     >
   </div>
 
   <div class="group">
-    <select formControlName="outputCur">
+    <select
+      formControlName="outputCur"
+      (change)="
+        getRatesForCurrency(this.form.value['outputCur'], 'inputVal');
+        count(this.form.value['inputVal'],
+        'outputVal',
+        this.form.value['outputCur'])
+    ">
       <option *ngFor="let currency of currencies" [ngValue]="currency">
         {{currency.code}} {{currency.name}}
       </option>
@@ -28,13 +39,10 @@
     <input
       formControlName="outputVal"
       type="number"
-      name="outputVal"
-      id="outputVal"
       (change)="count(
         this.form.value['outputVal'],
-        3,
         'inputVal',
-        this.form.value['outputCur']
+        this.form.value['inputCur']
       )"
     >
   </div>
