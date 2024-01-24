@@ -27,6 +27,10 @@ export class CurrencyBoxComponent implements OnInit {
     inputVal: {},
     outputVal: {}
   };
+  symbols = {
+    inputVal: '',
+    outputVal: ''
+  }
   ngOnInit() {
     this.currencies = [...Object.values(currencies)];
     this.initForm();
@@ -39,8 +43,8 @@ export class CurrencyBoxComponent implements OnInit {
       inputCur: new FormControl(this.currencies[92]), //RUB
       outputCur: new FormControl(this.currencies[0]), //USD
     });
-    this.getRatesForCurrency({'code': 'RUB'}, 'outputVal');
-    this.getRatesForCurrency({'code': 'USD'}, 'inputVal');
+    this.getRatesForCurrency({'code': 'RUB', 'symbol_native': 'P'}, 'inputVal');
+    this.getRatesForCurrency({'code': 'USD', 'symbol_native': '$'}, 'outputVal');
     this.count(this.form.controls['inputVal'].value, 'outputVal', {'code': 'USD'});
   }
 
@@ -52,7 +56,8 @@ export class CurrencyBoxComponent implements OnInit {
 
     this.rates$.subscribe(res => {
       if (this.rates[control]) {
-        let result: number = input * this.rates[control].conversion_rates?.[outputCurrency.code];
+        let currencyToCheck = control === 'outputVal' ? 'inputVal' : 'outputVal';
+        let result: number = input * this.rates[currencyToCheck].conversion_rates?.[outputCurrency.code];
         this.setResult(control, result);
       }
     });
@@ -67,6 +72,7 @@ export class CurrencyBoxComponent implements OnInit {
         next: v => {
           this.rates[position] = v;
           this.rates$.next(this.rates[position]);
+          this.symbols[position] = this.currencies.find(x => x.code === curCode).symbol_native;
         },
         error: e => console.log(e)
     });

@@ -1,50 +1,56 @@
-<form [formGroup]="form">
-  <div class="group">
-    <select
-      formControlName="inputCur"
-      (change)="
-        getRatesForCurrency(this.form.value['inputCur'], 'outputVal');
+<div class="container">
+  <div class="container_bg container_bg_l">{{symbols.inputVal}}</div>
+  <div class="container_bg container_bg_r">{{symbols.outputVal}}</div>
+</div>
+<div class="main">
+  <form [formGroup]="form">
+    <div class="group">
+      <select
+        formControlName="inputCur"
+        (change)="
+        getRatesForCurrency(this.form.value['inputCur'],  'inputVal');
         count(this.form.value['inputVal'],
         'outputVal',
         this.form.value['outputCur'])
       ">
-      <option *ngFor="let currency of currencies" [ngValue]="currency">
-        {{currency.code}} {{currency.name}}
-      </option>
-    </select>
-    <input
-      formControlName="inputVal"
-      type="number"
-      (change)="count(
+        <option *ngFor="let currency of currencies" [ngValue]="currency">
+          {{currency.code}} {{currency.name}}
+        </option>
+      </select>
+      <input
+        formControlName="inputVal"
+        type="number"
+        (change)="count(
         this.form.value['inputVal'],
         'outputVal',
         this.form.value['outputCur']
       )"
-    >
-  </div>
+      >
+    </div>
 
-  <div class="group">
-    <select
-      formControlName="outputCur"
-      (change)="
-        getRatesForCurrency(this.form.value['outputCur'], 'inputVal');
+    <div class="group">
+      <select
+        formControlName="outputCur"
+        (change)="
+        getRatesForCurrency(this.form.value['outputCur'],'outputVal');
         count(this.form.value['inputVal'],
         'outputVal',
         this.form.value['outputCur'])
     ">
-      <option *ngFor="let currency of currencies" [ngValue]="currency">
-        {{currency.code}} {{currency.name}}
-      </option>
-    </select>
-    <input
-      formControlName="outputVal"
-      type="number"
-      (change)="count(
+        <option *ngFor="let currency of currencies" [ngValue]="currency">
+          {{currency.code}} {{currency.name}}
+        </option>
+      </select>
+      <input
+        formControlName="outputVal"
+        type="number"
+        (change)="count(
         this.form.value['outputVal'],
         'inputVal',
         this.form.value['inputCur']
       )"
-    >
-  </div>
+      >
+    </div>
 
-</form>
+  </form>
+</div>

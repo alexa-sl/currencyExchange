@@ -1,0 +1,36 @@
+.container
+  position: relative
+  &_bg
+    font-size: 30vh
+    top: 0
+    position: absolute
+    bottom: 0
+    z-index: -1
+    color: rgb(222, 208, 208)
+    margin-top: 15vh
+    &_l
+      left: 5rem
+      transform: rotate(320deg)
+      -webkit-transform: rotate(320deg)
+    &_r
+      right: 5rem
+      transform: rotate(-320deg)
+      -webkit-transform: rotate(-320deg)
+
+.main
+  width: 100%
+  min-height: 100%
+  display: flex
+  justify-content: center
+  align-items: center
+  padding: 1rem
+  box-sizing: inherit
+  position: relative
+.content
+  display: flex
+  justify-content: space-around
+  width: 100%
+  max-width: 700px
+
+input
+  margin: 1rem
